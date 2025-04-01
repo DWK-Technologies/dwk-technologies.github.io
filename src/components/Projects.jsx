@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import {
   ChevronLeft,
   ChevronRight,
   ArrowRight,
   ExternalLink,
-  Info,
-  X,
 } from "lucide-react";
 import droneImage from "../assets/images/drone.png";
 import reidentificationImage from "../assets/images/reidentification.png";
@@ -133,6 +132,16 @@ function Projects() {
     setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: nextProject,
+    onSwipedRight: prevProject,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: false,
+    trackTouch: true,
+    delta: 10,
+    swipeDuration: 500,
+  });
+
   const currentProject = projects[currentIndex];
 
   // Funkcja pomocnicza do pobierania tłumaczeń projektu
@@ -162,7 +171,7 @@ function Projects() {
         </div>
 
         {/* Mobile view - Compact format */}
-        <div className="md:hidden mx-4">
+        <div className="md:hidden mx-4" {...swipeHandlers}>
           <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50 overflow-hidden">
             {/* Image container */}
             <div className="relative h-[200px] overflow-hidden">
@@ -269,7 +278,10 @@ function Projects() {
         </div>
 
         {/* Desktop view - Retain original layout */}
-        <div className="hidden md:grid md:grid-cols-2 gap-8 bg-gray-800/50 border border-gray-700/50 p-8 rounded-xl mx-12 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50">
+        <div
+          className="hidden md:grid md:grid-cols-2 gap-8 bg-gray-800/50 border border-gray-700/50 p-8 rounded-xl mx-12 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50"
+          {...swipeHandlers}
+        >
           <div className="h-[550px] overflow-hidden rounded-lg bg-gray-900 relative group">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
             <img
