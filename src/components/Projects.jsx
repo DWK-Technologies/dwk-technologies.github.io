@@ -122,20 +122,13 @@ const projects = [
 
 function Projects() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showDetails, setShowDetails] = useState(false);
 
   const nextProject = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
-    setShowDetails(false);
   };
 
   const prevProject = () => {
     setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-    setShowDetails(false);
-  };
-
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
   };
 
   const currentProject = projects[currentIndex];
@@ -161,11 +154,11 @@ function Projects() {
           </button>
         </div>
 
-        {/* Mobile view - Card format */}
+        {/* Mobile view - Compact format */}
         <div className="md:hidden mx-4">
           <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50 overflow-hidden">
             {/* Image container */}
-            <div className="relative h-[250px] overflow-hidden">
+            <div className="relative h-[200px] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
               <img
                 src={currentProject.image}
@@ -195,125 +188,74 @@ function Projects() {
               </div>
             </div>
 
-            {/* Content - Collapsed view */}
-            {!showDetails ? (
-              <div className="p-4">
-                <p className="text-gray-300 text-sm line-clamp-3 mb-3">
+            {/* Content - Compact but complete */}
+            <div className="p-4">
+              <div className="mb-4">
+                <h4 className="text-md font-bold text-teal-400 mb-2">
+                  Cel projektu
+                </h4>
+                <p className="text-gray-300 text-sm">
                   {currentProject.description_full}
                 </p>
-                <button
-                  onClick={toggleDetails}
-                  className="flex items-center text-teal-400 hover:text-white transition-all duration-300 text-sm font-medium"
-                >
-                  <span className="mr-1">Szczegóły</span>
-                  <Info className="w-4 h-4" />
-                </button>
               </div>
-            ) : (
-              <div className="p-4 pt-0">
-                {/* Modal/slide in with details */}
-                <div className="fixed inset-0 bg-gray-900/95 z-50 overflow-y-auto">
-                  <div className="p-4 min-h-screen flex flex-col">
-                    <div className="flex justify-between items-center sticky top-0 bg-gray-900 p-2 mb-4 rounded">
-                      <h3 className="text-xl font-bold text-teal-400">
-                        {currentProject.title}
-                      </h3>
-                      <button
-                        onClick={toggleDetails}
-                        className="p-2 rounded-full bg-gray-800"
-                      >
-                        <X className="w-5 h-5 text-gray-300" />
-                      </button>
-                    </div>
 
-                    <div className="grow">
-                      <h3 className="text-lg font-bold text-white mb-2">
-                        Cel projektu
-                      </h3>
-                      <p className="text-gray-300 mb-6 text-sm">
-                        {currentProject.description_full}
-                      </p>
-
-                      <h3 className="text-lg font-bold text-white mb-2">
-                        Zrealizowane prace
-                      </h3>
-                      <ul className="space-y-3 mb-6">
-                        {currentProject.details.map((detail, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <div className="mt-1 mr-2 flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center">
-                              <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                            </div>
-                            <p className="text-gray-300 text-sm">{detail}</p>
-                          </li>
-                        ))}
-                      </ul>
-
-                      {/* Links */}
-                      <div className="flex flex-col gap-3 mb-8">
-                        {currentProject.video && (
-                          <a
-                            href={currentProject.video}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center text-teal-400 hover:text-white transition-all duration-300"
-                          >
-                            <span className="mr-2 font-medium">
-                              Zobacz wideo
-                            </span>
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                        {currentProject.radon_link && (
-                          <a
-                            href={currentProject.radon_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center text-teal-400 hover:text-white transition-all duration-300"
-                          >
-                            <span className="mr-2 font-medium">
-                              Projekt w systemie RAD-on
-                            </span>
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                        {currentProject.more_info_link && (
-                          <a
-                            href={currentProject.more_info_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center text-teal-400 hover:text-white transition-all duration-300"
-                          >
-                            <span className="mr-2 font-medium">
-                              Więcej informacji
-                            </span>
-                            <ArrowRight className="w-4 h-4" />
-                          </a>
-                        )}
+              <div className="mb-4">
+                <h4 className="text-md font-bold text-teal-400 mb-2">
+                  Zrealizowane prace
+                </h4>
+                <ul className="space-y-2">
+                  {currentProject.details.map((detail, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <div className="mt-1 mr-2 flex-shrink-0 w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center">
+                        <div className="w-1 h-1 bg-white rounded-full"></div>
                       </div>
-                    </div>
-
-                    <div className="flex justify-center mt-auto">
-                      <button
-                        onClick={prevProject}
-                        className="bg-gray-800 p-3 rounded-full text-gray-300 mr-4"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={nextProject}
-                        className="bg-gray-800 p-3 rounded-full text-gray-300"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                      <p className="text-gray-300 text-sm">{detail}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
+
+              {/* Links */}
+              <div className="flex flex-wrap gap-3 mt-3">
+                {currentProject.video && (
+                  <a
+                    href={currentProject.video}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    <span className="mr-1 font-medium">Zobacz wideo</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+                {currentProject.radon_link && (
+                  <a
+                    href={currentProject.radon_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    <span className="mr-1 font-medium">RAD-on</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+                {currentProject.more_info_link && (
+                  <a
+                    href={currentProject.more_info_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    <span className="mr-1 font-medium">Więcej</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Desktop view - Retain original layout with some improvements */}
+        {/* Desktop view - Retain original layout */}
         <div className="hidden md:grid md:grid-cols-2 gap-8 bg-gray-800/50 border border-gray-700/50 p-8 rounded-xl mx-12 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50">
           <div className="h-[550px] overflow-hidden rounded-lg bg-gray-900 relative group">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
@@ -419,14 +361,11 @@ function Projects() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center mt-4">
         {projects.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => {
-              setCurrentIndex(idx);
-              setShowDetails(false);
-            }}
+            onClick={() => setCurrentIndex(idx)}
             className={`w-2.5 h-2.5 md:w-3 md:h-3 mx-1 rounded-full transition-all duration-300 ${
               idx === currentIndex
                 ? "bg-teal-400 scale-125"
