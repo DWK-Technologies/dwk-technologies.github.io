@@ -12,6 +12,7 @@ import reidentificationImage from "../assets/images/reidentification.png";
 import mocapStudioImage from "../assets/images/mocap.png";
 import poseImage from "../assets/images/pose.png";
 import travelImage from "../assets/images/travel.png";
+import { useLanguage } from "../context/LanguageContext";
 
 const projects = [
   {
@@ -122,6 +123,7 @@ const projects = [
 
 function Projects() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t, getProjectTranslation } = useLanguage();
 
   const nextProject = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
@@ -133,12 +135,17 @@ function Projects() {
 
   const currentProject = projects[currentIndex];
 
+  // Funkcja pomocnicza do pobierania tłumaczeń projektu
+  const getTranslatedDetail = (field) => {
+    return getProjectTranslation(currentProject.title, field);
+  };
+
   return (
     <section>
       <div className="text-center">
         <h2 className="text-3xl md:text-4xl font-bold">
           <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 leading-relaxed pb-2">
-            Nasze Projekty
+            {t("projects.title")}
           </span>
         </h2>
       </div>
@@ -162,7 +169,7 @@ function Projects() {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
               <img
                 src={currentProject.image}
-                alt={currentProject.title}
+                alt={getTranslatedDetail("title")}
                 className="w-full h-full object-cover object-center"
               />
 
@@ -183,7 +190,7 @@ function Projects() {
               {/* Title */}
               <div className="absolute bottom-0 left-0 right-0 z-20 p-4">
                 <h3 className="text-lg font-bold text-white">
-                  {currentProject.title}
+                  {getTranslatedDetail("title")}
                 </h3>
               </div>
             </div>
@@ -192,19 +199,19 @@ function Projects() {
             <div className="p-4">
               <div className="mb-4">
                 <h4 className="text-md font-bold text-teal-400 mb-2">
-                  Cel projektu
+                  {t("projects.goal")}
                 </h4>
                 <p className="text-gray-300 text-sm">
-                  {currentProject.description_full}
+                  {getTranslatedDetail("description_full")}
                 </p>
               </div>
 
               <div className="mb-4">
                 <h4 className="text-md font-bold text-teal-400 mb-2">
-                  Zrealizowane prace
+                  {t("projects.works")}
                 </h4>
                 <ul className="space-y-2">
-                  {currentProject.details.map((detail, idx) => (
+                  {getTranslatedDetail("details").map((detail, idx) => (
                     <li key={idx} className="flex items-start">
                       <div className="mt-1 mr-2 flex-shrink-0 w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center">
                         <div className="w-1 h-1 bg-white rounded-full"></div>
@@ -224,7 +231,9 @@ function Projects() {
                     rel="noopener noreferrer"
                     className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
                   >
-                    <span className="mr-1 font-medium">Zobacz wideo</span>
+                    <span className="mr-1 font-medium">
+                      {t("projects.links.video")}
+                    </span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}
@@ -235,7 +244,9 @@ function Projects() {
                     rel="noopener noreferrer"
                     className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
                   >
-                    <span className="mr-1 font-medium">RAD-on</span>
+                    <span className="mr-1 font-medium">
+                      {t("projects.links.radonShort")}
+                    </span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}
@@ -246,7 +257,9 @@ function Projects() {
                     rel="noopener noreferrer"
                     className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 text-xs"
                   >
-                    <span className="mr-1 font-medium">Więcej</span>
+                    <span className="mr-1 font-medium">
+                      {t("projects.links.moreShort")}
+                    </span>
                     <ArrowRight className="w-3 h-3" />
                   </a>
                 )}
@@ -261,7 +274,7 @@ function Projects() {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
             <img
               src={currentProject.image}
-              alt={currentProject.title}
+              alt={getTranslatedDetail("title")}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 z-20 flex items-end">
@@ -277,9 +290,8 @@ function Projects() {
                   ))}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors duration-300">
-                  {currentProject.title}
+                  {getTranslatedDetail("title")}
                 </h3>
-                <p className="text-gray-300">{currentProject.description}</p>
               </div>
             </div>
           </div>
@@ -287,17 +299,17 @@ function Projects() {
           <div className="flex flex-col justify-between h-[550px] overflow-y-auto pr-2">
             <div>
               <h3 className="text-2xl font-bold text-white mb-2">
-                Cel projektu
+                {t("projects.goal")}
               </h3>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                {currentProject.description_full}
+                {getTranslatedDetail("description_full")}
               </p>
 
               <h3 className="text-xl font-bold text-white mb-4">
-                Zrealizowane prace
+                {t("projects.works")}
               </h3>
               <ul className="space-y-4">
-                {currentProject.details.map((detail, idx) => (
+                {getTranslatedDetail("details").map((detail, idx) => (
                   <li key={idx} className="flex items-start group">
                     <div className="mt-1 mr-3 flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
@@ -318,7 +330,9 @@ function Projects() {
                   rel="noopener noreferrer"
                   className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 hover:scale-105"
                 >
-                  <span className="mr-2 font-medium">Zobacz wideo</span>
+                  <span className="mr-2 font-medium">
+                    {t("projects.links.video")}
+                  </span>
                   <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               )}
@@ -330,7 +344,7 @@ function Projects() {
                   className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 hover:scale-105"
                 >
                   <span className="mr-2 font-medium">
-                    Projekt w systemie RAD-on
+                    {t("projects.links.radon")}
                   </span>
                   <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -342,7 +356,9 @@ function Projects() {
                   rel="noopener noreferrer"
                   className="group flex items-center text-teal-400 hover:text-white transition-all duration-300 hover:scale-105"
                 >
-                  <span className="mr-2 font-medium">Więcej informacji</span>
+                  <span className="mr-2 font-medium">
+                    {t("projects.links.more")}
+                  </span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               )}

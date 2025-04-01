@@ -1,8 +1,12 @@
 import React from "react";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
+import { useLanguage } from "./context/LanguageContext";
+import { Globe } from "lucide-react";
 
 function App() {
+  const { language, toggleLanguage, t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
       <nav className="bg-gray-950/80 backdrop-blur-md py-4 px-8 sticky top-0 z-10 border-b border-gray-800">
@@ -10,13 +14,20 @@ function App() {
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
             DWK Technologies
           </h2>
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             <a
               href="#projects"
               className="hover:text-teal-400 transition-colors"
             >
-              Projekty
+              {t("nav.projects")}
             </a>
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 px-3 py-1 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors text-sm"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{language === "pl" ? "EN" : "PL"}</span>
+            </button>
           </div>
         </div>
       </nav>
@@ -25,12 +36,11 @@ function App() {
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-3">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 leading-relaxed pb-2 inline-block">
-              Innowacyjne Rozwiązania Technologiczne
+              {t("header.title")}
             </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-            Dostarczamy przełomowe technologie, które napędzają biznes i
-            zmieniają pomysły w gotowe produkty rynkowe.
+            {t("header.subtitle")}
           </p>
         </div>
       </header>
@@ -52,14 +62,11 @@ function App() {
               <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-4">
                 DWK Technologies
               </h3>
-              <p className="text-gray-400">
-                Specjaliści w dziedzinie zaawansowanych technologii wizyjnych i
-                rozwiązań opartych o sztuczną inteligencję.
-              </p>
+              <p className="text-gray-400">{t("footer.description")}</p>
             </div>
           </div>
           <div className="pt-8 border-t border-gray-800 text-center text-gray-500">
-            <p>© 2025 DWK Technologies. Wszelkie prawa zastrzeżone.</p>
+            <p>{t("footer.copyright")}</p>
           </div>
         </div>
       </footer>
