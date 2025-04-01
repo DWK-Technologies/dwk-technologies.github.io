@@ -159,7 +159,7 @@ function Projects() {
         </h2>
       </div>
 
-      <div className="relative py-8">
+      <div className="relative py-8" {...swipeHandlers}>
         <div className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 z-10">
           <button
             onClick={prevProject}
@@ -171,8 +171,8 @@ function Projects() {
         </div>
 
         {/* Mobile view - Compact format */}
-        <div className="md:hidden mx-4" {...swipeHandlers}>
-          <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50 overflow-hidden">
+        <div className="md:hidden mx-4">
+          <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50 overflow-hidden touch-manipulation">
             {/* Image container */}
             <div className="relative h-[200px] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
@@ -278,10 +278,7 @@ function Projects() {
         </div>
 
         {/* Desktop view - Retain original layout */}
-        <div
-          className="hidden md:grid md:grid-cols-2 gap-8 bg-gray-800/50 border border-gray-700/50 p-8 rounded-xl mx-12 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50"
-          {...swipeHandlers}
-        >
+        <div className="hidden md:grid md:grid-cols-2 gap-8 bg-gray-800/50 border border-gray-700/50 p-8 rounded-xl mx-12 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-gray-600/50 touch-manipulation">
           <div className="h-[550px] overflow-hidden rounded-lg bg-gray-900 relative group">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 z-10"></div>
             <img
